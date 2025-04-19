@@ -21,10 +21,14 @@ Some Glimpses of my project:
 
 3) The Main Page:
    
-![Screenshot (362)](https://github.com/user-attachments/assets/f408da55-661c-421b-b0bc-a094ccb3729a)
+![Screenshot1](https://github.com/user-attachments/assets/175d7ba2-e4c0-4373-be3f-c338bdf68568)
 
 
-4)The Main Page with some results:
+4) The Main Page after entering an invalid PIN code:
 
-![Screenshot (364)](https://github.com/user-attachments/assets/7e6cb2fb-e873-4c70-a4f8-b07c923a2d7c)
+![Screenshot2](https://github.com/user-attachments/assets/ff5fdbca-7532-4ac7-a1ca-13bc174ffbd0)
 
+
+5)The Main Page with some results:
+
+![Screenshot3](https://github.com/user-attachments/assets/800fef63-7f0f-40ef-bb2b-ee9ea0f3d7ae)

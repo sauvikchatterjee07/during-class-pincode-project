@@ -9,26 +9,36 @@ style.textContent = `
 }
 
 body {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  margin: 0;
+  padding: 0;
   color: #fff;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
-  z-index: 1;
+  overflow-x: hidden;
+  font-family: sans-serif;
 }
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: url('./assets/Index.png') no-repeat center center / cover;
   z-index: -1;
   animation: animateBg 5s linear infinite;
   filter: hue-rotate(0deg);
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .container1 {
@@ -43,62 +53,87 @@ body::before {
   align-items: center;
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-}
-
-.container2 {
-  position: relative;
-  padding: 20px;
-  margin: 20px 0;
-  text-align: left;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 300px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: none;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-}
-
-.container2::-webkit-scrollbar {
-  width: 8px;
-}
-.container2::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  margin: 0 auto 30px;
 }
 
 #pincode {
-  width: 300px;
+  padding: 5px 10px;
+  width: 250px;
   height: 30px;
   margin-right: 10px;
   border: 5px solid #fff;
+  border-radius: 8px;
 }
 
 button {
- width: 100px;
-    height: 40px;
-    background: #80669d;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    font-size: 1em;
-    color: white;
-    cursor: pointer;
+  width: 100px;
+  height: 40px;
+  background: #80669d;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  font-size: 1em;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
 
-    font-weight: 500;
+button:hover {
+  background-color:rgba(144, 0, 163, 0.64);
+}
+
+.heading {
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+.loc {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: left;
+  color: white;
+}
+
+.loc p {
+  margin: 6px 0;
+  font-size: 16px;
+}
+
+.error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.loader {
+  margin: 30px auto;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #0077cc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 #result {
-  color: #fff;
-  line-height: 1.6;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
 }
 `;
 
@@ -115,8 +150,8 @@ function getPincodeData() {
 
     //check if pincode is valid
     if (pin.length !== 6 || isNaN(pin)) {
-        resultDiv.innerHTML = "Please enter a valid 6-digit PIN code";
-        return;
+      resultDiv.innerHTML = `<p class="error">❌ Please enter a valid 6-digit PIN code.</p>`;
+      return;
     }
 
     //network call to the api
@@ -124,40 +159,36 @@ function getPincodeData() {
 
     // console.log(API);
 
+    // Showing loading state
+    resultDiv.innerHTML = `<div class="loader"></div>`;
+
     fetch(API)
-        .then((resp) => resp.json())
-        .then((data) => {
-            const info = data[0];
+    .then((resp) => resp.json())
+    .then((data) => {
+      const info = data[0];
 
-            // console.log(info);
+      if (info.Status === "Success") {
+        const postOffices = info.PostOffice;
+        let output = `<h2 class="heading">📍 Results for PIN ${pin}</h2>`;
 
-            if (info.Status === "Success") {
-                const postOffice = info.PostOffice;
-                // console.log(postOffice);
-
-                let output = `<h3>RESULTS FOR PIN ${pin} : </h3> <hr/>`;
-
-                postOffice.forEach((office) => {
-                    output += `
-                    <p> Post Office: ${office.Name}</p>
-                    <p> District: ${office.District}</p>
-                    <p> State: ${office.State}</p>
-                    <hr/>
-                    `;
-                });
-
-                resultDiv.innerHTML = output;
-                container2.style.display = "flex";
-            } else {
-                resultDiv.innerHTML = info.Message;
-                container2.style.display = "flex";
-            }
-        })
-        .catch((error) => {
-            resultDiv.innerHTML =
-                "Error in the data for this PIN Code. Try again later.";
-            console.log(error);
+        postOffices.forEach((office) => {
+          output += `
+              <div class="loc">
+                <p><strong>Post Office:</strong> ${office.Name}</p>
+                <p><strong>District:</strong> ${office.District}</p>
+                <p><strong>State:</strong> ${office.State}</p>
+              </div>
+              `;
         });
+
+        resultDiv.innerHTML = output;
+      } else {
+          resultDiv.innerHTML = `<p class="error">⚠️ ${info.Message}</p>`;
+      }
+    })
+    .catch((error) => {
+            resultDiv.innerHTML = `<p class="error">❌ Could not fetch data. Please try again later.</p>`;
+    });
 
     // console.log(prom);
 
