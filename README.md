@@ -4,27 +4,57 @@ Designed an web-app which finds out the post offices in the desired pin codes.
 
 The authentication is done by using firebase and post offices by post office API.
 Some Glimpses of my project:
+
 1) Register page:
 
-![Screenshot (359)](https://github.com/user-attachments/assets/77ec233f-0946-41e6-81fd-a945eacb2086)
+![1](https://github.com/user-attachments/assets/a433ecb1-0e77-4fb6-8d19-7e1fa66d48ac)
 
 
 
-2)Login Page:
 
-![Screenshot (360)](https://github.com/user-attachments/assets/be2814c9-f5a3-4a34-9eab-0b6ca541abf0)
+2) Login Page:
 
-3)LoggedIn successfully:
-
-![Screenshot (361)](https://github.com/user-attachments/assets/62e2f638-7190-4d7d-b2cd-5a8ef62446ce)
+![2](https://github.com/user-attachments/assets/f0e03f51-0c5c-4d02-98fe-482353414fbb)
 
 
-3) The Main Page:
+
+3) Data filled in LogIn page:
+
+![3](https://github.com/user-attachments/assets/d327d037-52cf-4f6e-9892-84f8e889a1d2)
+
+
+4) LoggedIn successfully:
+
+![4](https://github.com/user-attachments/assets/b0ac268e-796b-4f24-8114-f024f65ba589)
+
+
+
+
+
+5) The Main Page:
    
-![Screenshot (362)](https://github.com/user-attachments/assets/f408da55-661c-421b-b0bc-a094ccb3729a)
+![5](https://github.com/user-attachments/assets/4530bba8-de34-4cc5-95da-87399c95e735)
 
 
-4)The Main Page with some results:
 
-![Screenshot (364)](https://github.com/user-attachments/assets/7e6cb2fb-e873-4c70-a4f8-b07c923a2d7c)
+
+6) The Main Page with some results:
+
+![6](https://github.com/user-attachments/assets/b64ef28d-e0de-4813-990a-19bb78a6b047)
+
+
+
+
+7) Logging Out:
+
+![7](https://github.com/user-attachments/assets/50617a11-9546-44a7-bd98-1de2db0ce01d)
+
+
+
+
+8) Back to Login Page:
+
+![8](https://github.com/user-attachments/assets/bb591f81-c789-42d5-84c3-a443634db314)
+
+
 

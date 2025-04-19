@@ -3,22 +3,39 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Cache-Control" content="no-store" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
         <title>Pincode info founder</title>
         <link rel="icon" type="image/jpg" href="./assets/indian-post-office-logo.jpg" sizes="16x16">
     </head>
+    <script>
+        // Force reload from server not from cache
+        window.addEventListener('pageshow', function (event) {
+          if (event.persisted || (window.performance && performance.navigation.type === 2)) {
+            window.location.reload();
+          }
+        });
+      </script>
     <body>
+        <button id="logout">Logout</button>
         <header><h1>Search Post-Offices by Entering Pincode</h1></header>
         <div class="container1">
         <input type="text" id="pincode" placeholder="Enter PIN code" />
-        <button onclick="getPincodeData()">Search</button>
+        <button id="Search">Search</button>
        
     </div>
 
     <div class="container2">
         <div id="result"></div>
     </div>
-        
+    <p id="footer">
+      &copy; Developed By &nbsp;
+        <a href="https://www.linkedin.com/in/sayantan-chatterjee-a023b5266/ target="_blank" rel="noopener" title="Visit Sayantan Chatterjee's LinkedIn Profile"> Sayantan Chatterjee</a>
+       
+      </a>
+    </p>
     
-        <script src="script.js"></script>
+        <script type = module src="script.js"></script>
     </body>
 </html>

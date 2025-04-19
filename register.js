@@ -1,24 +1,22 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAnBGCzJ8MFdkLOTcEeBWGpvcXqakrLUx4",
-    authDomain: "pincode-validation-app.firebaseapp.com",
-    projectId: "pincode-validation-app",
-    storageBucket: "pincode-validation-app.firebasestorage.app",
-    messagingSenderId: "310458333625",
-    appId: "1:310458333625:web:d52074c725841e3ec31e68",
-    measurementId: "G-29XE5Q9Q04"
-};
+import { firebaseConfig} from './firebase-config.js';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const db = getFirestore(app); // app is your Firebase app instance
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.replace("index.html");
+  }
+});
 // Submit button event
 const form = document.querySelector("form");
 form.addEventListener("submit", function(e) {
@@ -29,12 +27,26 @@ form.addEventListener("submit", function(e) {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            const userdata = {
+                email: email,
+                password: password
+            };
             alert("Account created successfully!");
-            window.location.href = "login.html";
+            const docRef = doc(db, "users", user.uid);
+            setDoc(docRef, userdata)
+                .then(() => {
+                    window.location.href = "login.html";
+                    //console.log("Document written with ID: ", user.uid);
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+        
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             alert(errorMessage);
         });
+
 });
